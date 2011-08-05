@@ -1,0 +1,30 @@
+Instrucciones de la Kata String Calculator 
+------------------------------------------
+
+Antes de empezar:
+
+- No leas todo el problema. Simplemente lee paso a paso.
+- Haz solo una tarea cada vez, la idea es aprender a trabajar incrementalmente
+- Solo es necesario testear las entradas correctas. No es necesario hacer tests para evitar datos de entrada incorrectos.
+ 
+String Calculator:
+
+1) Crea una calculadora que acepta strings  con un método Add(string numbers) que devuelve int
+	1. El metodo puede recibir 0, 1, o 2 números separados por comas, y devolverá su suma (para una cadena vacía devolverá 0) por ejemplo  "" ó "1" ó "1,2"
+	2. Empezar con el test más simple de cadena vacía, y entonces continuar con 1 y después dos números
+	3. Recuerda resolver los problemas de la manera más simple, de tal modo que te obligue a pensar en tests en los que no habías reparado
+	4. Recuerda refactorizar cada vez que pasas un test
+
+2) Permitir que el método Add maneje una cantidad indeterminada de números
+3) Permitir que el método Add maneje nuevas líneas entre números (enn lugar de comas)
+	1. La siguiente cadena es correcta: "1\n2,3" (= 6)
+	2. La siguiente no es correcta: "1,\n" (no se necesita testear, solo por aclaración)
+4) Soportar diferentes delimitadores
+	1. Para cambiar un delimitador, el principio de la cadena contendrá una línea separada al estilo: “//[delimitador]\n[numeros…]”. Por ejemplo “//;\n1;2” devolverá 3, y su delimitador es ';'
+	2. La primera línea es opcional, todos los escenarios anteriores han de seguir soportandose.
+5) Invocar Add con un número negativo lanzará una excepción "Negativos no permitidos", mostrando además el negativo que se pasó. Si hay múltiples negativos, mostrar únicamente los negativos.
+
+6) Los números mayores que 1000 deberían ser ignorados, así que añadir 2 + 1001 = 2
+7) Los delimitadores deben de ser de cualqueir longitud con el siguiente formato “//[delimitador]\n” por ejemplo: “//[***]\n1***2***3” debería devolver 6
+8) Permitir múltiples delimitadores: “//[delim1][delim2]\n”. Por ejemplo “//[*][%]\n1*2%3” debería devolver 6.
+9) Asegúrate de que también se pueden manejar multiples delimitadores de longitud mayor que 1.
