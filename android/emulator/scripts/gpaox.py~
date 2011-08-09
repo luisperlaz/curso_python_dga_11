@@ -1,0 +1,89 @@
+# -*- coding: utf-8 -*-
+
+__autor__   = "Alexander Olivares (aox)"
+__email__   = "olivaresa@gmail.com"
+__date__    = "2010-06-14"
+__version__ = "beta-0.2"
+
+import android
+import time
+import urllib2
+import sys
+
+droid = android.Android()
+
+def localizar():
+    droid.startLocating(3600,1)
+
+    time.sleep(10)
+    
+    fin = True
+    segundos = 300
+    seg_trancurridos = 0
+    
+    while fin:
+        time.sleep(1)
+        seg_trancurridos += 1
+        l = droid.readLocation()
+        ll = l.result
+        
+        if "gps" in ll:
+            mensaje = u"Posición actual: "
+            pos = (str(ll["gps"]["latitude"]), str(ll["gps"]["longitude"]))
+            fin = False
+            droid.makeToast(u"Posición GPS encontrada")
+        else:
+
+            if seg_trancurridos == segundos: 
+                fin = False
+                
+                if "network" in ll:
+                    pos = (str(ll["network"]["latitude"]), str(ll["network"]["longitude"]))
+                    mensaje = u"Posición red celular: "
+                    droid.makeToast(u"Posición Red Celular encontrada")
+                else:
+                    
+                    ll = droid.getLastKnownLocation().result
+                    pos = (str(ll["network"]["latitude"]), str(ll["network"]["longitude"]))
+                    mensaje = u"Ultima posición red celular: "
+                    droid.makeToast(u"No se pudo establecer conexión, se enviara la ultima posición registrada")
+    
+    pll = "%s,%s" % (str(pos[0]), str(pos[1]))
+
+    mapa = "http://maps.google.com/maps?ll=%s&q=%s" % (pll, pll)
+
+    droid.stopLocating()
+    
+    return mensaje, mapa    
+
+def enviar_mensaje(numero):
+    try: 
+        mensaje, mapa = localizar()
+        msg = "%s %s" % (mensaje,  mapa)
+	asunto = "Respuesta a la petición de localización GPS"
+	para = "xxxx@neodoo.es"
+        droid.sendEmail(para, asunto, msg.encode('ascii', 'replace'), )
+    except:
+        droid.makeToast("Error: " + str(sys.exc_info()[0]))
+
+
+def demonio():
+    
+    while True:
+        time.sleep(10)
+        msg_solicitud = droid.smsGetMessages(True)
+        
+        for i in msg_solicitud.result:
+            
+            if i["body"].strip().upper() == "GPS":
+                droid.makeToast(u"Solicitud de localización recibida")
+                droid.smsMarkMessageRead([i["_id"]], True)
+                telefono = i["address"]
+                enviar_mensaje(telefono)
+                droid.makeToast(u"Enviado localización a: %s" % (telefono))
+                
+                
+                
+    
+if __name__ == "__main__":
+    demonio()

@@ -1,0 +1,5 @@
+import android
+droid = android.Android()
+name = droid.getInput("Hello!", "What is your name?")
+print name 
+droid.makeToast("Hello, %s" % name.result)

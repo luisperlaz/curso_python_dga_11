@@ -1,0 +1,1 @@
+${ANDROID_SDK}/tools/android create avd -n "curso_python" -t 8 -f --skin "600x480" -p ./avd
