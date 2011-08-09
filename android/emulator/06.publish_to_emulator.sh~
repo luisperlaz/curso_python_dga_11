@@ -1,3 +1,0 @@
-#sudo cp ./scripts/*.* ./mnt_sdcard
-${ANDROID_SDK}/platform-tools/adb - curso_python push ./scripts/*.* /sdcard/sl4a/scripts
-
