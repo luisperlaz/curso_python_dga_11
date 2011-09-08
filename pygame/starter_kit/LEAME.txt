@@ -1,0 +1,5 @@
+Créditos
+=========
+* Las imágenes que usamos en el tutorial son de Walter Velazquez.
+* Tomamos ideas de las presentaciones de Hugo Ruscitti.
+

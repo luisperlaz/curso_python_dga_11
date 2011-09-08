@@ -4,7 +4,7 @@
 Ejemplo basico de codigo jython que hace uso de una clase Java
 '''
 
-from java.security import MessageDigest
+from java.security import MessageDigest #@UnresolvedImport
 
 def calc_md5(text):
     md5 = MessageDigest.getInstance("md5")
